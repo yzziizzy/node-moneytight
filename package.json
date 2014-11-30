@@ -1,0 +1,19 @@
+{
+  "name": "node-moneytight",
+  "version": "0.0.0",
+  "description": "dont lose your cents",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: test are lame\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yzziizzy/node-moneytight.git"
+  },
+  "author": "Izzy",
+  "license": "Affero GPL v3.0",
+  "bugs": {
+    "url": "https://github.com/yzziizzy/node-moneytight/issues"
+  },
+  "homepage": "https://github.com/yzziizzy/node-moneytight"
+}
