@@ -1,5 +1,7 @@
 
 var mt = require('./index.js');
+var colors = require('colors');
+var bignum = require('bignum');
 
 
 var a = new mt(-123.456);
@@ -23,13 +25,17 @@ test_format(1.02, '$1.02');
 test_format(123.00, '$123.00');
 test_format(12345.67, '$12,345.67');
 test_format(1234567.89, '$1,234,567.89');
+test_format(-123.456, '-$123.45');
+
 
 process.exit();
 
 function test_format(dollars, expected) {
 	var a = new mt(dollars);
-	console.log('expected: ' + expected);
-	console.log('actual:   ' + a.formatDollars());
+	var actual = a.formatDollars();
+	var color = actual == expected ? 'green' : 'red';
+	console.log(('expected: ' + expected)[color]);
+	console.log(('actual:   ' + actual)[color]);
 	console.log('');
 }
 
@@ -59,3 +65,5 @@ console.log(res);
 console.log("\n")
 
  
+
+

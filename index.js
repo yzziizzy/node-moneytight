@@ -20,8 +20,8 @@ var MoneyTight = function(opts) {
 		};
 	}
 	else {
-		// BUG: bad rounding in this function: try -123.456
-		n = opts * 100;
+		// tricks to aviod rounding errors: try -123.456
+		n = bignum(opts * 1000).div(10);
 	}
 	// need to include option of how many decimals are stored internally
 	

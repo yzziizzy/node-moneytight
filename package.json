@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/yzziizzy/node-moneytight/issues"
   },
-  "homepage": "https://github.com/yzziizzy/node-moneytight"
+  "homepage": "https://github.com/yzziizzy/node-moneytight",
+  "dependencies": {
+    "colors": "^1.0.3"
+  }
 }
