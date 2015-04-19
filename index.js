@@ -37,6 +37,7 @@ var MoneyTight = function(opts) {
 
 
 
+
 MoneyTight.prototype.roundUp = function(int) {
 };
 MoneyTight.prototype.roundDown = function(int) {
@@ -63,18 +64,18 @@ MoneyTight.prototype.formatDollars = function() {
 	}
 	return $;
 };
+
+
 MoneyTight.prototype.toString = function(base) { // base is ignored; money is always decimal.
 	var str = this.amt.toString();
 	var x = 3 - str.length;
 	if(x > 0) {
 		str = (x > 1 ? '00' : '0') + str ;
 	}
-	while(x < 0) {
-		str.replace(/(\d\d\d)([^,\d])/g, '$1,$2');
-		break;
-	}
-	return  str.substr(0, str.length - 2) + "." + str.substr(-2);
-};
+	return str.replace(/\B(\d\d)$/, '.$1').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
 MoneyTight.prototype.inspect = function () {
 	return '<MoneyTight ' + this.formatDollars() + '>';
 };
