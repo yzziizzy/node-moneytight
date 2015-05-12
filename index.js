@@ -156,6 +156,63 @@ MoneyTight.prototype.sum = function(arr) { // in units not cents
 };
 
 
+
+function monthlyPayment(loan_amount, monthly_interest, num_payments) {
+	return (loan_amount * monthly_interest) / (1 - Math.pow(1 + monthly_interest, -num_payments) );
+}
+function piRatios(balance, monthly_interest, payment_amount) {
+	var i_p = balance * monthly_interest;
+	return {
+		principle: payment_amount - i_p,
+		interest: i_p,
+		new_balance: balance - payment_amount + i_p,
+	};
+}
+
+
+// calculate an amortization table without losing any cents 
+// currently, there might be rounding errors on very large numbers internally. don't calculate the national debt with this.
+MoneyTight.prototype.amortTable = function(loanAmount, APR, months) {
+	
+	// BUG need to sanitize and convert inputs
+	
+	
+	var o = {
+		principle: [],
+		interest: [],
+		payment: [],
+		starting_balance: [],
+		ending_balance: [],
+	};
+	
+	APR /= 12; // you can do this with APR's
+	
+	var payment = monthlyPayment(loanAmount, APR, months);
+	
+	var plow = Math.floor(payment);
+	var phigh = Math.ceil(payment);
+	
+	var acc = 0;
+	
+	for(var i = 0; i < months; i++) {
+		
+		var p_i = piRatios(loanAmount, APR, payment);
+		
+		o.starting_balance[i] = loanAmount;
+		loanAmount = p_i.new_balance;
+		
+		o.payment[i] = payment;
+		o.principle[i] = p_i.principle;
+		o.interest[i] = p_i.interest;
+		o.ending_balance[i] = p_i.new_balance;
+		o.period[i] = i;
+	}
+	
+	return o;
+	
+};
+
+
 function forceNum(x) {
 	if(typeof x == 'object') {
 		if(x instanceof bignum) {
