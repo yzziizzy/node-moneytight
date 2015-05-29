@@ -37,10 +37,19 @@ var MoneyTight = function(opts) {
 
 
 
-
+// round to nearest precision in cents
 MoneyTight.prototype.roundUp = function(int) {
+	var m = bignum(1).shiftLeft(int);
+	
+	var neg = this.amt.lt(0);
+	
+	var trimmed = this.amt.sub(this.amt.mod(m));
 };
 MoneyTight.prototype.roundDown = function(int) {
+};
+MoneyTight.prototype.roundTowardZero = function(int) {
+};
+MoneyTight.prototype.roundAwayFromZero = function(int) {
 };
 MoneyTight.prototype.roundNearest = function(int) {
 };
@@ -158,7 +167,13 @@ MoneyTight.prototype.sum = function(arr) { // in units not cents
 
 
 function monthlyPayment(loan_amount, monthly_interest, num_payments) {
-	return (loan_amount * monthly_interest) / (1 - Math.pow(1 + monthly_interest, -num_payments) );
+	// BUG: sanitize and convert inputs
+	
+	// num_payments must be an integer
+	// TODO: figure out how to do the exponentiation with bignum properly
+	
+	// NOTE: there shouldn't be any significant rounding errors here. even pawn shops only charge 1400%
+	return (loan_amount * monthly_interest) / (1 - Math.pow(1 + monthly_interest, -num_payments));
 }
 function piRatios(balance, monthly_interest, payment_amount) {
 	var i_p = balance * monthly_interest;
